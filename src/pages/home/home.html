@@ -1,0 +1,91 @@
+<ion-header>
+    <ion-navbar color="primary" padding>
+        <ion-title>Cards</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <section text-center>
+        <!--
+            User names should go here 
+            
+        -->
+    </section>
+
+
+    <ion-grid>
+
+        <!--
+        Grid for displaying stored cards
+        cards can be (shared/traded), edited, or deleted
+        cards are grid style using ion card with rows and colms
+        each card will have an image within chosen background and a name
+        for prototype purpose cards will not have modal view
+        clicking displays modal view with card content...
+        content of card will include image, name, 
+        user defined stats, delete, share buttons
+        cards are stored and retreived from server
+    -->
+
+        <h3 text-center *ngIf="loadCards().length===0">
+            Create a Card!
+        </h3>
+        <ion-row>
+            <ion-col *ngFor="let card of loadCards(); let i = index" col-12 cl-md-6 col-lg-4 col-xl-3>
+
+                <ion-card (click)="openModal(card)" text-center padding color="dark">
+                    <ion-row>
+                        <ion-col class="bg" col-12 padding>
+                            <ion-card-header>
+                                <img class="header-img" src="../../assets/imgs/logo.png">
+                            </ion-card-header>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col padding>
+                            <ion-card-content>
+                                <h1 style="size:1.8em">{{card.name}}</h1>
+                            </ion-card-content>
+
+                            <ion-row padding>
+                                <ion-col>
+                                    <h3>{{card.statOne}}</h3>
+                                    <p>{{card.statOneValue}}</p>
+                                </ion-col>
+                                <ion-col>
+                                    <p>{{card.statTwo}}</p>
+                                    <p>{{card.statTwoValue}}</p>
+                                </ion-col>
+                            </ion-row>
+                            <ion-row>
+                                <ion-col>
+                                    <button ion-button (click)="editCard(card, i)" color="light" icon-start>
+                                        <ion-icon name="create"></ion-icon>
+                                         Edit
+                                    </button>
+                                </ion-col>
+                                <ion-col>
+                                    <button ion-button (click)="shareCard(card, i)" color="light" icon-start>
+                                        <ion-icon name="share-alt"></ion-icon>
+                                        share
+                                     </button>
+                                </ion-col>
+                                <ion-col>
+                                    <button ion-button (click)="removeCard(card, i)" color="light" icon-start>
+                                    <ion-icon name="trash"></ion-icon>
+                                Remove
+                                </button>
+                                </ion-col>
+                            </ion-row>
+                        </ion-col>
+                    </ion-row>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+
+    <ion-fab bottom center>
+        <button ion-fab (click)="addCard()"><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+</ion-content>
